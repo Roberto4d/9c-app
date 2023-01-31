@@ -1,0 +1,45 @@
+<%- layout('layouts/boilerplate') %>
+
+<div class="row">
+    <h1 class="text-center">Editar Test</h1>
+    <div class="col-6 offset-3">
+        <form action="/test/<%=test._id%>?_method=PUT" method="POST" novalidate class="validate-form">
+            <div class="mb-2">
+                <label for="name" class="form-label">Nombre</label>
+                <input name="test[name]" class="form-control" type="text"  id="name" placeholder="Nombre" value="<%= test.name %> " required> 
+                <div class="valid-feedback">Bien!</div>
+                <div class="invalid-feedback">Profavor Elige Un Nombre.</div> 
+            </div>
+            <div class="mb-2">
+                <label for="picture" class="form-label">Picture</label>
+                <input name="test[picture]" class="form-control" type="text"  id="picture" placeholder="URL">  
+                <div class="valid-feedback">Bien!</div>   
+            </div>
+            <div class="mb-2">
+                <label for="description" class="form-label">Descripción: </label>
+                <textarea name="test[description]" class="form-control" type="text"  id="description" placeholder="Descripción"><%= test.description %> </textarea>  
+            </div>  
+            <div class="md-2">
+                <label for="result" class="form-label">Resultado</label>
+                <input name="test[result]" class="form-control" type="text"  id="test" placeholder="Valor Del Test" value="<%= test.result %>"> 
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="categories" class="form-label">Categoria</label>
+                <select name="test[categories]" id="categories" class="form-select mb-3" aria-label=".form-select-lg example" value="<%= test.categories %> " required>
+                    <% for(let c of categories){%>
+                        <option value="<%=c%>"> <%=c%> </option>  
+                    <% } %>  
+                </select>
+            </div>
+            <div class="d-grid gap-2 mb-2">
+                <button class="btn btn-dark">Agregar</button>
+            </div>
+        </form> 
+        <div class="mb-2">
+            <a href="/test">Regresar a todos los Test</a>
+        </div>
+    </div>
+</div>
+
+

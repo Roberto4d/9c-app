@@ -1,0 +1,47 @@
+<%- layout('layouts/boilerplate') %>
+
+<div class="row">
+    <h1 class="text-center"><%= athlete.firstName %> <%= athlete.lastName %>  </h1>
+    <h2 class="text-center">Agregar Test</h2>
+    <div class="col-6 offset-3">
+        <form action="/user/<%= athlete._id %>/test" method="POST" novalidate class="validate-form">
+            <div class="mb-2">
+                <label for="name" class="form-label">Nombre</label>
+                <input name="test[name]" class="form-control" type="text"  id="name" placeholder="Nombre" required> 
+                <div class="valid-feedback">Bien!</div>
+                <div class="invalid-feedback">Please choose a username.</div> 
+            </div>
+            <div class="mb-2">
+                <label for="picture" class="form-label">Picture</label>
+                <input name="test[picture]" class="form-control" type="text"  id="picture" placeholder="URL">  
+                <div class="valid-feedback">Bien!</div>   
+            </div>
+            <div class="mb-2">
+                <label for="description" class="form-label">Descripción: </label>
+                <textarea name="test[description]" class="form-control" type="text"  id="description" placeholder="Descripción"></textarea>  
+            </div>  
+            <div class="md-2">
+                <label for="result" class="form-label">Resultado</label>
+                <input name="test[result]" class="form-control" type="text"  id="test" placeholder="20"><label></label>   
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="categories" class="form-label">Categoria</label>
+                <select name="test[categories]" id="categories" class="form-select mb-3" aria-label=".form-select-lg example" required>
+                    <option selected disabled value="">-</option>
+                    <% for(let c of categories){%>
+                        <option value="<%=c%>"> <%=c%> </option>  
+                    <% } %>  
+                </select>
+            </div>
+            <div class="d-grid gap-2 mb-2">
+                <button class="btn btn-dark">Agregar</button>
+            </div>
+        </form> 
+        <div class="mb-2">
+            <a href="/user/<%= athlete._id %> ">Regresar al Perfil</a>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,39 @@
+<%- layout('layouts/boilerplate.ejs') %> 
+<div class="row">
+    <h1 class="text-center">Todos los Test</h1>
+    <div class="col-6 offset-3 mb-3">
+        <form action="/test/new">    
+            <div class="d-grid gap-2 mb-2">
+                <button class="btn btn-dark">Agregar Test</button>
+            </div>   
+        </form>  
+        <ul class="list-group">
+            <% for (let test of allTest ){%>
+                <li class="list-group-item"><a href="/test/<%=test._id%>"><%=test.name%></a></li>
+            <% } %> 
+        </ul>  
+    </div>
+    <div class="col-6 offset-3 mb-3">
+        <label for="filter" class="form-label"><b>Filtrar por: </b></label>
+        <form action="/test" method="GET">
+            <label for="filter" class="form-label"><b>Categoria:</b></label>
+            <div class="form-check">
+                <% for(let c of categories){%>
+                    <input class="form-check-input" name="categories" id="filter"type="radio" value="<%=c%>"> <%=c%> </option>  <br>
+                <% } %>   
+            </div>
+            <div class="d-grid gap-2 my-2">
+                <button class="btn btn-dark">Buscar</button>
+            </div>
+        </form>
+        <div class="d-grid gap-2 my-2">
+            <form action="/test">
+                <div class="d-grid gap-2 my-2">
+                    <button class="btn btn-dark">Reset Filtro</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

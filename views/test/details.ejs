@@ -1,0 +1,40 @@
+<%- layout('layouts/boilerplate') %> 
+<div class="row">
+    <div class="col-6 offset-3 mb-5">
+        <div class="card mb-3">
+            <% if (!test.picture) {%>
+                <div class= "col-4">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3586/3586930.png" class="card-img-top" alt="No picture">   
+                </div>
+            <% } else {%>
+                <img src="<%=test.picture%>" class="card-img-top" alt="picture:<%=test.name%>">
+            <% } %>  
+            <div class="card-body">
+                <h6>By: <a href="/user/<%= test.user._id %>"><%= test.user.firstName %> <%= test.user.lastName %> </a></h6>
+                <h5 class="card-title text-center"><%=test.name%></h5>
+                <p class="card-text"><%= test.description %></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Categoria: <%=test.categories%> </li>
+                <li class="list-group-item">Resultado: <%= test.result %></li>
+                <div class="list-group-item">    
+                    <a href="/user/<%= test.user._id %>" class="card-link">Regresar al perfil </a>
+                </div>
+                <div class="list-group-item">
+                    <form action="/test/<%= test._id %>/edit">
+                        <div class="d-grid gap-2 mb-2">
+                            <button class="btn btn-dark">Editar a <%=test.name%> </button>
+                        </div>
+                    </form>
+                </div>  
+                <div class="list-group-item text-end">
+                    <form action="/test/<%= test._id %>?_method=DELETE" method="POST">
+                        <div class="d-grid gap-2 mb-2">
+                            <button class="btn btn-danger">Eliminar a <%=test.name%> </button>
+                        </div>
+                    </form>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
