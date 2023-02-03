@@ -2,13 +2,15 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require('ejs-mate');
-const {athleteSchema} = require("./schemas.js");
+const {athleteSchema, reviewSchema} = require("./schemas.js");
 const wrapAsync = require("./utils/catchAsync");
 const AppError = require("./utils/appError");
 const methodOverride = require('method-override');
 const User = require("./models/user");
 const {genders, grades, gradesBoulder, categories} = require("./selects");
 const Test = require("./models/test.js");
+const catchAsync = require("./utils/catchAsync");
+const Review = require("./models/review"); 
 
 main().catch(err => console.log(err));
 async function main() {
@@ -27,6 +29,16 @@ app.use(methodOverride('_method'));
 
 const validateAthlete = (req,res,next) => {
     const {error} =  athleteSchema.validate(req.body);
+    if(error){
+        const msg = error.details.map(el => el.message).join(",")
+        throw new AppError(msg, 400)
+    }else{
+        next();
+    }
+}
+
+const validateReview = (req,res,next) => {
+    const {error} =  reviewSchema.validate(req.body);
     if(error){
         const msg = error.details.map(el => el.message).join(",")
         throw new AppError(msg, 400)
@@ -148,7 +160,7 @@ app.get('/test', async(req,res)=>{
 
 app.get('/test/:id', async(req,res) => {
     const { id } = req.params;   
-    const test = await Test.findById(id).populate("user");
+    const test = await Test.findById(id).populate("reviews").populate("user");
     res.render("test/details", {test});
     }
 );
@@ -171,8 +183,32 @@ app.put("/test/:id", async(req,res,)=>{
 app.delete('/test/:id', async(req, res) => {
     const {id} = req.params;
     await Test.findByIdAndDelete(id);
-    res.redirect(`/user/${athlete._id}`);
+    res.redirect(`/users`);
 });
+
+///
+///Reviews
+///
+
+app.post('/test/:id/reviews', validateReview ,wrapAsync(async(req,res,next)=>{
+    const {id} = req.params;
+    const test = await Test.findById(id);
+    const review = new Review(req.body.review);
+    test.reviews.push(review);
+    await review.save();
+    await test.save();
+    res.redirect(`/test/${test.id}`)
+}))
+
+//delete review
+
+app.delete('/test/:id/reviews/:reviewId',wrapAsync(async(req,res,next)=>{
+    const {reviewId, id} = req.params
+    await Test.findByIdAndUpdate(id, { $pull: { reviews: reviewId}});
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/test/${id}`);  
+}))
+
 
 ///Manejando errores
 

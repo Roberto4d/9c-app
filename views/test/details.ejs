@@ -1,6 +1,6 @@
 <%- layout('layouts/boilerplate') %> 
 <div class="row">
-    <div class="col-6 offset-3 mb-5">
+    <div class="col-6 mb-5">
         <div class="card mb-3">
             <% if (!test.picture) {%>
                 <div class= "col-4">
@@ -36,5 +36,30 @@
                 </div>
             </ul>
         </div>
+    </div>
+    <div class="col-6">
+        <h2>Deja Una Reseña</h2>
+        <form action="/test/<%= test._id %>/reviews" method="POST" class="mb-3 validate-form" novalidate>
+            <div class="mb-3">
+                <label class="form-label" for="rating">Calificacion</label><br>
+                <input class="form-range" type="range" min="1" max="5" id="rating" name="review[rating]">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="body">Reseña</label>
+                <textarea class="form-control" name="review[body]" id="body" cols="30" rows="4" required></textarea>
+            </div>
+           <button class="btn btn-dark">Enviar</button>
+        </form>
+        <% for(let review of test.reviews){ %> 
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Calificación: <%= review.rating %> </h5>
+                <p class="card-text">Reseña: <%= review.body %></p> 
+                <form action="/test/<%= test.id %>/reviews/<%= review.id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">Eliminar</button>
+                </form>
+            </div>
+        </div>
+        <% } %> 
     </div>
 </div>
