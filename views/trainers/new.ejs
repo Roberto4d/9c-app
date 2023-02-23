@@ -1,24 +1,24 @@
 <%- layout('layouts/boilerplate') %>
 
 <div class="row">
-    <h1 class="text-center">Agregar Atleta</h1>
+    <h1 class="text-center">Agregar Entrenador</h1>
     <div class="col-6 offset-3">
-        <form action="/users" method="POST" novalidate class="validate-form">
+        <form action="/trainers" method="POST" novalidate class="validate-form">
             <div class="mb-3">
                 <label for="firstName" class="form-label">Nombre</label>
-                <input name="athlete[firstName]" class="form-control" type="text"  id="firstName" placeholder="Nombre" required> 
+                <input name="trainer[firstName]" class="form-control" type="text"  id="firstName" placeholder="Nombre" required> 
                 <div class="valid-feedback">Bien!</div>
                 <div class="invalid-feedback">Please choose a username.</div> 
             </div>
             <div class="mb-2">
                 <label for="lastName" class="form-label">Apellido</label>
-                <input name="athlete[lastName]" class="form-control" type="text"  id="lastName" placeholder="Apellido" required> 
+                <input name="trainer[lastName]" class="form-control" type="text"  id="lastName" placeholder="Apellido" required> 
                 <div class="valid-feedback">Bien!</div> 
                 <div class="invalid-feedback">Please choose a username.</div> 
             </div>
             <div class="col-md-3">
                 <label for="age" class="form-label">Edad</label>
-                <select name="athlete[age]" id="age" class="form-select mb-3" required>
+                <select name="trainer[age]" id="age" class="form-select mb-3" required>
                     <option selected disabled value="">-</option>
                     <% for(let k = 15; k <= 70; k++ ){%>
                         <option value="<%=k%>"> <%=k%></option>  
@@ -27,7 +27,7 @@
             </div>
             <div class="col-md-3">
                 <label for="gender" class="form-label">Genero</label>
-                <select name="athlete[gender]" id="gender" class="form-select mb-3" aria-label=".form-select-lg example" required>
+                <select name="trainer[gender]" id="gender" class="form-select mb-3" aria-label=".form-select-lg example" required>
                     <option selected disabled value="">-</option>
                     <% for(let g of genders){%>
                         <option value="<%=g%>"> <%=g%> </option>  
@@ -36,12 +36,12 @@
             </div>
             <div class="mb-2">
                 <label for="picture" class="form-label">Picture</label>
-                <input name="athlete[picture]" class="form-control" type="text"  id="picture" placeholder="URL">  
+                <input name="trainer[picture]" class="form-control" type="text"  id="picture" placeholder="URL">  
                 <div class="valid-feedback">Bien!</div>   
             </div>  
             <div class="mb-2">
                 <label for="weight" class="form-label">Peso</label>
-                <select name="athlete[weight]" id="weight" class="form-select-sm col-md-2 mb-3" aria-label=".form-select-lg example" required>
+                <select name="trainer[weight]" id="weight" class="form-select-sm col-md-2 mb-3" aria-label=".form-select-lg example" required>
                     <option selected disabled value="">-</option>
                     <% for(let i = 40; i <= 100; i++ ){%>
                         <option value="<%=i%>"> <%=i%></option>  
@@ -53,7 +53,7 @@
             </div> 
             <div class="mb-2">
                 <label for="height" class="form-label">Estatura</label>
-                <select name="athlete[height]" id="height" class="col-md-2 form-select-sm mb-3" aria-label=".form-select-lg example" required>
+                <select name="trainer[height]" id="height" class="col-md-2 form-select-sm mb-3" aria-label=".form-select-lg example" required>
                     <option selected disabled value="">-</option>
                     <% for(let j = 140; j <= 210; j++ ){%>
                         <option value="<%=j%>"> <%=j%></option>  
@@ -62,7 +62,7 @@
             </div>
             <div class="mb-2">
                 <label for="wingSpan" class="form-label">Envergadura</label>
-                <select name="athlete[wingSpan]" id="wingSpan" class="col-md-2 form-select-sm mb-3" aria-label=".form-select-lg example" required>
+                <select name="trainer[wingSpan]" id="wingSpan" class="col-md-2 form-select-sm mb-3" aria-label=".form-select-lg example" required>
                     <option selected disabled value="">-</option>
                     <% for(let l = 140; l <= 210; l++ ){%>
                         <option value="<%=l%>"><%=l%></option>  
@@ -71,7 +71,7 @@
             </div>
            <div class="mb-2">
                 <label for="lead" class="form-label">Maximo Grado en Ruta</label>
-                <select name="athlete[redpointLead]" id="lead" class="col-md-2 form-select-sm mb-3" aria-label=".form-select-lg example" required>
+                <select name="trainer[redpointLead]" id="lead" class="col-md-2 form-select-sm mb-3" aria-label=".form-select-lg example" required>
                     <option selected disabled value="">-</option>
                     <% for(let grade of grades){%>
                         <option value="<%=grade%>"> <%=grade%> </option>  
@@ -80,7 +80,7 @@
            </div>
            <div class="mb-2">
             <label for="boulder" class="form-label">Maximo Grado en Boulder</label>
-            <select name="athlete[redpointBoulder]" id="boulder" class="col-md-2 form-select-sm mb-3" aria-label=".form-select-lg example" required>
+            <select name="trainer[redpointBoulder]" id="boulder" class="col-md-2 form-select-sm mb-3" aria-label=".form-select-lg example" required>
                 <option selected disabled value="">-</option>
                 <% for(let grade of gradesBoulder){%>
                     <option value="<%=grade%>"> <%=grade%> </option>  
@@ -89,14 +89,14 @@
            </div>
             <div class="mb-2">
                 <label for="description" class="form-label">Descripción: </label>
-                <textarea name="athlete[description]" class="form-control" type="text"  id="description" placeholder="Descripción"></textarea>  
+                <textarea name="trainer[description]" class="form-control" type="text"  id="description" placeholder="Descripción"></textarea>  
             </div>  
             <div class="d-grid gap-2 mb-2">
                 <button class="btn btn-dark">Agregar</button>
             </div>
         </form> 
         <div class="mb-2">
-            <a href="/users">Regresar a todos los atletas</a>
+            <a href="/trainers">Regresar a todos los atletas</a>
         </div>
     </div>
 </div>

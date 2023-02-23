@@ -1,30 +1,21 @@
 <%- layout('layouts/boilerplate.ejs') %> 
 <div class="row">
-    <h1 class="text-center">Atletas</h1>
+    <h1 class="text-center">Entrenadores</h1>
     <div class="col-6 offset-3 mb-3">
-        <form action="/user/new">    
+        <form action="/trainers/new">    
             <div class="d-grid gap-2 mb-2">
-                <button class="btn btn-dark">Agregar Atleta</button>
+                <button class="btn btn-dark">Agregar Entrendor</button>
             </div>   
         </form>  
-        <form action="/users" method="GET">
-            <div class="d-grid gap-2 mb-2">     
-                <label for="firstName" class="form-label">Buscar Atleta Por Nombre: </label>
-                <input name="firstName" type="text" class="form-control" id="firstName" placeholder="Nombre">
-            </div>
-            <div class="d-grid gap-2 my-2">    
-                <button class="btn btn-dark">Buscar</button>
-            </div>   
-        </form> 
         <ul class="list-group">
-            <% for (let athlete of athletes  ){%>
-                <li class="list-group-item"><a href="/user/<%=athlete._id%>"><%=athlete.firstName%> <%=athlete.lastName%></a></li>
+            <% for (let trainer of trainers  ){%>
+                <li class="list-group-item"><a href="/trainers/<%=trainer._id%>"><%=trainer.firstName%> <%=trainer.lastName%></a></li>
             <% } %> 
         </ul>  
     </div>
     <div class="col-6 offset-3 mb-3">
         <label for="filter" class="form-label"><b>Filtrar por: </b></label>
-        <form action="/users" method="GET">
+        <form action="/trainers" method="GET">
             <label for="filter" class="form-label"><b>Genero:</b></label>
             <div class="form-check">
                 <% for(let g of genders){%>
@@ -36,7 +27,7 @@
             </div>
         </form>
         <div class="d-grid gap-2 my-2">
-            <form action="/users">
+            <form action="/trainers">
                 <div class="d-grid gap-2 my-2">
                     <button class="btn btn-dark">Reset Filtro</button>
                 </div>
@@ -44,14 +35,9 @@
         </div>
     </div>
 </div>
-
-    
-
-    
-    
 <div class="my-5">
     <span>
-        <span class="text-muted">Usuarios: <b> <%= counting %> </b> </span>
+        <span class="text-muted">Entrenadores: <b> <%= counting %> </b> </span>
     </span>
 </div>
     

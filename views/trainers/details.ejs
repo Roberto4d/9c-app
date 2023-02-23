@@ -2,24 +2,25 @@
 <div class="row">
     <div class="col-6 offset-3 mb-5">
         <div class="card mb-3">
-            <% if (!athlete.picture) {%>
+            <% if (!trainer.picture) {%>
                 <div class= "col-4">
                     <img src="https://cdn-icons-png.flaticon.com/512/3586/3586930.png" class="card-img-top" alt="No picture">   
                 </div>
             <% } else {%>
-                <img src="<%=athlete.picture%>" class="card-img-top" alt="picture:<%=athlete.firstName%>">
+                <img src="<%=trainer.picture%>" class="card-img-top" alt="picture:<%=trainer.firstName%>">
             <% } %>  
             <div class="card-body">
-                <h5 class="card-title text-center"><%=athlete.firstName%> <%=athlete.lastName%></h5>
-                <p class="card-text"><%= athlete.description %></p>
+                <h5 class="card-title text-center"><%=trainer.firstName%> <%=trainer.lastName%></h5>
+                <p class="card-text"><%= trainer.description %></p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Genero: <a href="/users?gender=<%= athlete.gender %>"><%= athlete.gender %></a> <br> Edad: <%= athlete.age %> años</li>
-                <li class="list-group-item">Peso: <%= athlete.weight %> kg <br> Estatura: <%= athlete.height %> cm <br> Envergadura: <%= athlete.wingSpan %> cm </li>
-                <li class="list-group-item">Grado En Ruta:  <a href="/users?redpointLead=<%= athlete.redpointLead %>"><%= athlete.redpointLead %></a> <br> Grado En Boulder:  <a href="/users?redpointBoulder=<%= athlete.redpointBoulder %>"><%= athlete.redpointBoulder %></a></li>        
+                <li class="list-group-item">Genero: <a href="/trainers?gender=<%= trainer.gender %>"><%= trainer.gender %></a> <br> Edad: <%= trainer.age %> años</li>
+                <li class="list-group-item">Peso: <%= trainer.weight %> kg <br> Estatura: <%= trainer.height %> cm <br> Envergadura: <%= trainer.wingSpan %> cm </li>
+                <li class="list-group-item">Grado En Ruta: <a href="/trainers?redpointLead=<%= trainer.redpointLead %>"><%= trainer.redpointLead %></a> <br>
+                                            Grado En Boulder: <a href="/trainers?redpointBoulder=<%= trainer.redpointBoulder %>"><%= trainer.redpointBoulder %></a></li>        
                 <li class="list-group-item">
-                    <%  if (athlete.test.length) { %>
-                    <ul> <% for(let test of athlete.test){  %> 
+                    <%  if (trainer.test.length) { %>
+                    <ul> <% for(let test of trainer.test){  %> 
                         <li> <b>Test:</b> <a href="/test/<%= test._id %>"> <%= test.name %></a> <b>Resultado:</b> <%= test.result %></li>
                         <% } %> 
                     </ul>
@@ -31,24 +32,24 @@
                 
                 </li>        
                 <div class="list-group-item">    
-                    <a href="/users" class="card-link">Ver Todos Los Atletas</a>
+                    <a href="/trainers" class="card-link">Ver Todos Los Entrenadores</a>
                 </div>
                 <div class="list-group-item text-end">
-                    <form action="/user/<%= athlete._id %>/test/new">
+                    <form action="/trainers/<%= trainer._id %>/test/new">
                         <div class="d-grid gap-2 mb-2">
                             <button class="btn btn-dark">Agregar Test</button>
                         </div>
                     </form>
                 </div>
                 <div class="list-group-item">
-                    <form action="/user/<%= athlete._id %>/edit">
+                    <form action="/trainers/<%= trainer._id %>/edit">
                         <div class="d-grid gap-2 mb-2">
                             <button class="btn btn-dark">Editar</button>
                         </div>
                     </form>
                 </div>  
                 <div class="list-group-item text-end">
-                    <form action="/user/<%= athlete._id %>?_method=DELETE" method="POST">
+                    <form action="/trainers/<%= trainer._id %>?_method=DELETE" method="POST">
                         <div class="d-grid gap-2 mb-2">
                             <button class="btn btn-danger">Eliminar</button>
                         </div>

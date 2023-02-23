@@ -1,6 +1,6 @@
 const Joi = require("joi");
-module.exports.athleteSchema = Joi.object({
-    athlete: Joi.object({
+module.exports.trainerSchema = Joi.object({
+    trainer: Joi.object({
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
         age: Joi.number().min(0).required(),
@@ -14,9 +14,18 @@ module.exports.athleteSchema = Joi.object({
         description: Joi.string()
     }).required()
 });
+module.exports.testSchema = Joi.object({
+    test: Joi.object({
+        name: Joi.string().required(),
+        picture: Joi.string().required(),
+        description: Joi.string().required(),
+        result: Joi.number().required(),
+        categories: Joi.string().required()
+    }).required()
+});
 module.exports.reviewSchema = Joi.object({
     review: Joi.object({
         rating: Joi.number().required().integer().min(1).max(5),
         body: Joi.string().required()
     }).required()
-})
+});

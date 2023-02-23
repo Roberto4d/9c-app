@@ -22,10 +22,10 @@ const testSchema = new Schema({
         lowercase: true,
         enum: ['finger strength', 'upper body', 'flexibility', 'core']
     },
-    user:    
+    trainer:    
         {
             type: Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'Trainer'
         },
     reviews: 
     [
@@ -43,5 +43,4 @@ testSchema.post('findOneAndDelete', async (test) => {
     }
 })
 
-const Test = mongoose.model('Test', testSchema);
-module.exports = Test;
+module.exports = mongoose.model('Test', testSchema);

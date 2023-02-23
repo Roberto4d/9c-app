@@ -10,7 +10,7 @@
                 <img src="<%=test.picture%>" class="card-img-top" alt="picture:<%=test.name%>">
             <% } %>  
             <div class="card-body">
-                <h6>By: <a href="/user/<%= test.user._id %>"><%= test.user.firstName %> <%= test.user.lastName %> </a></h6>
+                <h6>By: <a href="/user/<%= test.trainer._id %>"><%= test.trainer.firstName %> <%= test.trainer.lastName %> </a></h6>
                 <h5 class="card-title text-center"><%=test.name%></h5>
                 <p class="card-text"><%= test.description %></p>
             </div>
@@ -18,7 +18,7 @@
                 <li class="list-group-item">Categoria: <%=test.categories%> </li>
                 <li class="list-group-item">Resultado: <%= test.result %></li>
                 <div class="list-group-item">    
-                    <a href="/user/<%= test.user._id %>" class="card-link">Regresar al perfil </a>
+                    <a href="/user/<%= test.trainer._id %>" class="card-link">Regresar al perfil </a>
                 </div>
                 <div class="list-group-item">
                     <form action="/test/<%= test._id %>/edit">
@@ -28,7 +28,7 @@
                     </form>
                 </div>  
                 <div class="list-group-item text-end">
-                    <form action="/test/<%= test._id %>?_method=DELETE" method="POST">
+                    <form action="/user/<%=test.trainer._id%>/test/<%=test._id%>?_method=DELETE" method="POST">
                         <div class="d-grid gap-2 mb-2">
                             <button class="btn btn-danger">Eliminar a <%=test.name%> </button>
                         </div>

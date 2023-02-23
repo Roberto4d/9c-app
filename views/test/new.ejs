@@ -1,12 +1,12 @@
 <%- layout('layouts/boilerplate') %>
 
 <div class="row">
-    <h1 class="text-center"><%= athlete.firstName %> <%= athlete.lastName %>  </h1>
+    <h1 class="text-center"><%= trainer.firstName %> <%= trainer.lastName %>  </h1>
     <h2 class="text-center">Agregar Test</h2>
     <div class="col-6 offset-3">
-        <form action="/user/<%= athlete._id %>/test" method="POST" novalidate class="validate-form">
+        <form action="/trainers/<%= trainer._id %>/test" method="POST" novalidate class="validate-form">
             <div class="mb-2">
-                <label for="name" class="form-label">Nombre</label>
+                <label for="name" class="form-label">Nombre Del Test</label>
                 <input name="test[name]" class="form-control" type="text"  id="name" placeholder="Nombre" required> 
                 <div class="valid-feedback">Bien!</div>
                 <div class="invalid-feedback">Please choose a username.</div> 
@@ -39,7 +39,7 @@
             </div>
         </form> 
         <div class="mb-2">
-            <a href="/user/<%= athlete._id %> ">Regresar al Perfil</a>
+            <a href="/user/<%= trainer._id %> ">Regresar al Perfil</a>
         </div>
     </div>
 </div>
