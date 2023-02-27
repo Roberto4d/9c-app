@@ -22,11 +22,14 @@ const testSchema = new Schema({
         lowercase: true,
         enum: ['finger strength', 'upper body', 'flexibility', 'core']
     },
-    trainer:    
-        {
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
+    trainer: {
             type: Schema.Types.ObjectId,
             ref: 'Trainer'
-        },
+    },
     reviews: 
     [
         {

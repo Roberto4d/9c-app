@@ -1,30 +1,16 @@
 const express = require("express");
 const router = express.Router({mergeParams: true});
-
+const {validateReview, isLoggedIn, verifyReview} = require("../middleware")
 const Review = require("../models/review"); 
 const Test = require("../models/test.js");
 
 const wrapAsync = require("../utils/catchAsync");
-const AppError = require("../utils/appError");
 
-const {reviewSchema} = require("../schemas.js");
-
-
-
-const validateReview = (req,res,next) => {
-    const {error} =  reviewSchema.validate(req.body);
-    if(error){
-        const msg = error.details.map(el => el.message).join(",")
-        throw new AppError(msg, 400)
-    }else{
-        next();
-    }
-}
-
-router.post('', validateReview ,wrapAsync(async(req,res)=>{
+router.post('', isLoggedIn,validateReview ,wrapAsync(async(req,res)=>{
     const {id} = req.params;
     const test = await Test.findById(id);
     const review = new Review(req.body.review);
+    review.author = req.user._id;
     test.reviews.push(review);
     await review.save();
     await test.save();
@@ -32,8 +18,8 @@ router.post('', validateReview ,wrapAsync(async(req,res)=>{
     res.redirect(`/test/${test.id}`)
 }))
 
-router.delete('/:reviewId',wrapAsync(async(req,res)=>{
-    const {reviewId, id} = req.params
+router.delete('/:reviewId',isLoggedIn,verifyReview,wrapAsync(async(req,res)=>{
+    const {id,reviewId} = req.params
     await Test.findByIdAndUpdate(id, { $pull: { reviews: reviewId}});
     await Review.findByIdAndDelete(reviewId);
     req.flash('success', 'Se elimino post exitosamente!');

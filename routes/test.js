@@ -5,21 +5,8 @@ const Test = require("../models/test.js");
 const Trainer = require("../models/trainer");
 
 const wrapAsync = require("../utils/catchAsync");
-const AppError = require("../utils/appError");
-
-const {testSchema} = require("../schemas.js");
+const {validateTest,isLoggedIn, verifyTest} = require("../middleware")
 const {categories} = require("../selects");
-
-
-const validateTest = (req,res,next) => {
-    const {error} = testSchema.validate(req.body);
-    if(error){
-        const msg = error.details.map(el => el.message).join(",")
-        throw new AppError(msg, 400)
-    }else{
-        next();
-    }
-}
 
 router.get('', wrapAsync(async(req,res)=>{
     const { categories } = req.query;
@@ -34,7 +21,12 @@ router.get('', wrapAsync(async(req,res)=>{
 
 router.get('/:id', wrapAsync(async(req,res) => {
     const { id } = req.params;   
-    const test = await Test.findById(id).populate("reviews").populate("trainer");
+    const test = await Test.findById(id).populate({
+        path: "reviews",
+        populate:{
+            path: "author"
+        }
+    }).populate("author");
     if(!test){
         req.flash('error', 'No se encontro test :(');
         return res.redirect(`/trainers`)
@@ -43,13 +35,13 @@ router.get('/:id', wrapAsync(async(req,res) => {
     }
 ));
 
-router.get('/:id/edit', wrapAsync(async(req,res) =>{
+router.get('/:id/edit', isLoggedIn,wrapAsync(async(req,res) =>{
     const {id} = req.params;
     const test = await Test.findById(id);
     res.render("test/edit", {test, categories});    
 }));
 
-router.put("/:id", validateTest, wrapAsync(async(req,res,)=>{
+router.put("/:id", isLoggedIn, validateTest, wrapAsync(async(req,res,)=>{
     const {id} = req.params;
     const editedTest = await Test.findByIdAndUpdate(id,{...req.body.test,runValidators: true, new: true});
     req.flash('success', 'Se actualizo test exitosamente!');
@@ -57,29 +49,29 @@ router.put("/:id", validateTest, wrapAsync(async(req,res,)=>{
 }));
 
 //Agrgar un test dentro del entrenador
-
-router.get('/trainers/:id/test/new',wrapAsync(async(req,res)=>{
+router.get('/trainers/:id/test/new', isLoggedIn, wrapAsync(async(req,res)=>{
     const {id} = req.params;
     const trainer = await Trainer.findById(id);
     res.render('test/new', {trainer, categories })
 }))
 
-router.post('/trainers/:id/test',validateTest, wrapAsync(async(req,res)=>{
+router.post('/trainers/:id/test', isLoggedIn, validateTest, wrapAsync(async(req,res)=>{
     const { id } = req.params;
     const trainer = await Trainer.findById(id);
     const { name,picture,description,result,categories } = req.body.test;  
-    const test = new Test({name,picture,description,result,categories})
+    const test = new Test({name,picture,description,result,categories});
+    test.author = req.user._id;
     trainer.test.push(test);
     test.trainer = trainer;
     await trainer.save();
     await test.save();
     req.flash('success', 'Se creo un test exitosamente!');
-    res.redirect(`/trainers/${trainer._id}`)
+    res.redirect(`/test/${test._id}`)
 }))
 
 //Eiminar un test de un entrenador
 
-router.delete('/trainer/:id/test/:testId', wrapAsync(async(req, res, next) => {
+router.delete('/trainers/:id/test/:testId', isLoggedIn,verifyTest, wrapAsync(async(req, res) => {
     const {id, testId} = req.params;
     await Trainer.findByIdAndUpdate(id, {$pull: { test: testId}})
     await Test.findByIdAndDelete(testId);

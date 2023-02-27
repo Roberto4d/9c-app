@@ -29,11 +29,12 @@
                         <li>Aun no se han agregado test </li>
                     </ul>    
                     <% } %> 
-                
-                </li>        
+                </li>       
                 <div class="list-group-item">    
+                    <p class="card-text text-center">Creado por: <%= trainer.author.email %> </p>
                     <a href="/trainers" class="card-link">Ver Todos Los Entrenadores</a>
                 </div>
+                <% if(currentUser && trainer.author.equals(currentUser)){ %>  
                 <div class="list-group-item text-end">
                     <form action="/trainers/<%= trainer._id %>/test/new">
                         <div class="d-grid gap-2 mb-2">
@@ -55,6 +56,7 @@
                         </div>
                     </form>
                 </div>
+                <% } %> 
             </ul>
         </div>
     </div>

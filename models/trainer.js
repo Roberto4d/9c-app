@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Test = require("./test")
+const Test = require("./test");
 const {Schema} = mongoose;
 
 const trainerSchema = new Schema({
@@ -38,6 +38,10 @@ const trainerSchema = new Schema({
     },
     description: {
         type: String
+    },
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
     test: [ 
         {
