@@ -1,6 +1,17 @@
+const { string } = require("joi");
 const mongoose = require("mongoose");
 const Test = require("./test");
 const {Schema} = mongoose;
+
+
+const pictureSchema = new Schema({
+    url: String,
+    filename: String
+});
+
+pictureSchema.virtual('thumbnail').get(function () {
+    return this.url.replace('/upload', '/upload/w_200');
+});
 
 const trainerSchema = new Schema({
     firstName: {
@@ -33,9 +44,7 @@ const trainerSchema = new Schema({
     redpointBoulder:{
         type: String,
     },
-    picture: {
-        type: String
-    },
+    picture: [pictureSchema],
     description: {
         type: String
     },

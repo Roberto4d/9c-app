@@ -3,7 +3,7 @@
 <div class="row">
     <h1 class="text-center">Agregar Entrenador</h1>
     <div class="col-6 offset-3">
-        <form action="/trainers" method="POST" novalidate class="validate-form">
+        <form action="/trainers" method="POST" novalidate class="validate-form" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="firstName" class="form-label">Nombre</label>
                 <input name="trainer[firstName]" class="form-control" type="text"  id="firstName" placeholder="Nombre" required> 
@@ -35,9 +35,8 @@
                 </select>
             </div>
             <div class="mb-2">
-                <label for="picture" class="form-label">Picture</label>
-                <input name="trainer[picture]" class="form-control" type="text"  id="picture" placeholder="URL">  
-                <div class="valid-feedback">Bien!</div>   
+                <label for="image" class="form-label">Imagenes</label>
+                <input class="form-control" type="file" name="image" id="image" class="col-md-8 form-select-sm mb-3" aria-label=".form-select-lg example" multiple>
             </div>  
             <div class="mb-2">
                 <label for="weight" class="form-label">Peso</label>

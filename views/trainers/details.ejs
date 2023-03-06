@@ -1,14 +1,32 @@
 <%- layout('layouts/boilerplate') %> 
 <div class="row">
+   
     <div class="col-6 offset-3 mb-5">
         <div class="card mb-3">
             <% if (!trainer.picture) {%>
                 <div class= "col-4">
                     <img src="https://cdn-icons-png.flaticon.com/512/3586/3586930.png" class="card-img-top" alt="No picture">   
                 </div>
-            <% } else {%>
-                <img src="<%=trainer.picture%>" class="card-img-top" alt="picture:<%=trainer.firstName%>">
-            <% } %>  
+            <% } %>
+            <div id="trainerCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <% trainer.picture.forEach((pic, i) => { %> 
+                  <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                    <img src=" <%=pic.url %>" class="d-block w-100" alt="">
+                  </div>
+                    <% });%>  
+                </div>
+                <% if(trainer.picture.length > 1) {%> 
+                <button class="carousel-control-prev" type="button" data-bs-target="#trainerCarousel" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#trainerCarousel" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+                <% } %> 
+              </div>
             <div class="card-body">
                 <h5 class="card-title text-center"><%=trainer.firstName%> <%=trainer.lastName%></h5>
                 <p class="card-text"><%= trainer.description %></p>

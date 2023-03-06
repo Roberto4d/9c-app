@@ -1,71 +1,25 @@
 const express = require("express");
 const router = express.Router();
 
-const Trainer = require("../models/trainer");
-
 const wrapAsync = require("../utils/catchAsync");
+const trainers = require("../controllers/trainers")
+const multer  = require('multer');
+const { storage } = require('../cloudinary/index')
+const upload = multer({storage});
 
-const {genders, grades, gradesBoulder} = require("../selects");
-const {isLoggedIn, validateTrainer, verifyAuthor} = require("../middleware")
+const { isLoggedIn, validateTrainer, verifyAuthor } = require("../middleware")
 
-router.get('/', wrapAsync(async(req, res, next) => {
-    const { gender } = req.query;
-    const counting = await Trainer.find({}).count();
-   if (gender){
-        const trainers = await Trainer.find({gender: `${gender}`}); 
-        res.render("trainers/trainers",{trainers, genders, grades, counting });
-    } else{
-        const trainers = await Trainer.find({}); 
-        res.render("trainers/trainers",{counting, trainers, genders, grades});
-    }   
-}));
+router.route('/')
+    .get(wrapAsync(trainers.index))
+    .post(isLoggedIn, upload.array('image'), validateTrainer, wrapAsync(trainers.postForm));
+    
+router.get('/new', isLoggedIn, trainers.newForm);
 
-router.get('/new', isLoggedIn, (req,res) => {
-    res.render("trainers/new", {genders,grades,gradesBoulder});   
-});
+router.route('/:id')
+    .get(isLoggedIn, wrapAsync(trainers.details))
+    .put(isLoggedIn, verifyAuthor, upload.array('image'), validateTrainer,wrapAsync(trainers.putEdit))
+    .delete(isLoggedIn, verifyAuthor, wrapAsync(trainers.delete));
 
-router.post('/', isLoggedIn,validateTrainer ,wrapAsync(async(req,res,next)=>{
-    const newTrainer = new Trainer(req.body.trainer);
-    newTrainer.author = req.user._id;
-    await newTrainer.save();
-    req.flash('success', 'Se creo un entrenador exitosamente!');
-    res.redirect(`/trainers/${newTrainer._id}`);
-}));
-
-router.get('/:id', isLoggedIn, wrapAsync(async(req,res) => {
-    const { id } = req.params;
-    const counting = await Trainer.find({}).count();
-    const trainer = await Trainer.findById(id).populate("test").populate("author");
-    if(!trainer){
-        req.flash('error', 'No se encontro entrenador :(');
-        return res.redirect('/trainers')
-    }
-    res.render("trainers/details", {trainer,counting});
-}));
-
-router.get('/:id/edit', isLoggedIn, verifyAuthor, wrapAsync(async(req,res) =>{
-        const {id} = req.params;
-        const trainer = await Trainer.findById(id);
-        if(!trainer){
-            req.flash('error', 'No se encontro al entrenador');
-            return res.redirect(`/trainers`)  
-        }
-        res.render("trainers/edit", {trainer, genders, grades, gradesBoulder});    
-}));
-
-router.put("/:id",isLoggedIn, verifyAuthor, validateTrainer, wrapAsync(async(req,res,next)=>{ 
-        const {id} = req.params;
-        const trainer = await Trainer.findByIdAndUpdate(id,{...req.body.trainer,runValidators: true, new: true});
-        req.flash('success', 'Se actualizo entrenador exitosamente!');
-        res.redirect(`/trainers/${trainer._id}`) 
-}));
-
-router.delete('/:id', isLoggedIn, verifyAuthor, wrapAsync(async(req, res) => {
-    const {id} = req.params;
-    const deletedTrainer = await Trainer.findByIdAndDelete(id);
-    req.flash('success', 'Se elimino entrenador exitosamente!');
-    res.redirect('/trainers');
-}));
-
+router.get('/:id/edit', isLoggedIn, verifyAuthor, wrapAsync(trainers.editForm))
 
 module.exports = router;

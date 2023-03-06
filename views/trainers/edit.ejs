@@ -3,7 +3,7 @@
 <div class="row">
     <h1 class="text-center">Editar <%=trainer.firstName%> <%= trainer.lastName %></h1>
     <div class="col-6 offset-3">
-        <form action="/trainers/<%=trainer._id%>?_method=PUT"  method="POST" novalidate class="validate-form">
+        <form action="/trainers/<%=trainer._id%>?_method=PUT"  method="POST" novalidate class="validate-form"  enctype="multipart/form-data">
             <div class="mb-2">
                 <label for="firstName" class="form-label">Nombre</label>
                 <input class="form-control" aria-label=".form-select-lg example" type="text" name="trainer[firstName]" id="firstName" placeholder="Nombre" value="<%= trainer.firstName %>" required>
@@ -30,11 +30,6 @@
                     <% } %>     
                 </select>
             </div>
-            <div class="mb-2">
-                <label for="picture" class="form-label">Picture</label>
-                <input class="form-control" type="text" name="trainer[picture]" id="picture" placeholder="URL" value="<%= trainer.picture %>" class="col-md-8 form-select-sm mb-3" aria-label=".form-select-lg example" required>
-                <div class="valid-feedback">Bien!</div>
-            </div>  
             <div class="mb-2">
                 <label for="weight" class="form-label">Peso</label>
                 <select name="trainer[weight]" id="weight" value="<%= trainer.weight %> " class="col-md-1 form-select-sm mb-3" aria-label=".form-select-lg example">
@@ -79,11 +74,25 @@
                 <label for="description" class="form-label">Descripción: </label>
                 <textarea class="form-control" type="text" name="trainer[description]" id="description"><%= trainer.description %></textarea>  
             </div>  
+            <div class="mb-3">
+                <% trainer.picture.forEach((pic, i) => { %>
+                   <img src="<%= pic.thumbnail %>" alt="" class="img-thumbnail"> 
+                   <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%= pic.filename %>">
+                   </div>
+                    <label id="image-<%=i%>" class="form-check-label" for="flexCheckDefault">Borrar Imagen</label>
+                <% }) %> 
+            </div>
+            <div class="mb-2">
+                <label for="image" class="form-label">Add fotos</label>
+                <input class="form-control" type="file" name="image" id="image" class="col-md-8 form-select-sm mb-3" aria-label=".form-select-lg example" multiple>
+                <div class="valid-feedback">Bien!</div>
+            </div>  
             <div class="d-grid gap-2 mb-2">
                 <button class="btn btn-dark">Guardar Cambios</button>
             </div>
         </form> 
-        <form action="/user/<%=trainer._id%>">
+        <form action="/trainers/<%=trainer._id%>">
             <div class="d-grid gap-2 mb-2">
                 <button class="btn btn-dark">Cancelar</button>
             </div>

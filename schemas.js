@@ -5,14 +5,15 @@ module.exports.trainerSchema = Joi.object({
         lastName: Joi.string().required(),
         age: Joi.number().min(0).required(),
         gender: Joi.string(),
-        picture: Joi.string(),
+        // picture: Joi.string(),
         weight: Joi.number(),
         height: Joi.number(),
         wingSpan: Joi.number(),
         redpointLead: Joi.string(),
         redpointBoulder: Joi.string(),
         description: Joi.string()
-    }).required()
+    }).required(),
+    deleteImages: Joi.array()
 });
 module.exports.testSchema = Joi.object({
     test: Joi.object({
