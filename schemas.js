@@ -3,6 +3,7 @@ module.exports.trainerSchema = Joi.object({
     trainer: Joi.object({
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
+        location: Joi.string(),
         age: Joi.number().min(0).required(),
         gender: Joi.string(),
         // picture: Joi.string(),

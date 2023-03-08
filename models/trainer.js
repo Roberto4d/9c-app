@@ -13,6 +13,8 @@ pictureSchema.virtual('thumbnail').get(function () {
     return this.url.replace('/upload', '/upload/w_200');
 });
 
+const opts = { toJSON: { virtuals: true } };
+
 const trainerSchema = new Schema({
     firstName: {
         type: String,
@@ -22,6 +24,20 @@ const trainerSchema = new Schema({
         type: String,
         required: true
     },
+    location:{
+        type: String
+    },
+    geometry: {
+        type: {
+          type: String, 
+          enum: ['Point'], 
+          required: true
+        },
+        coordinates: {
+          type: [Number],
+          required: true
+        }
+      },
     gender: {
         type: String,
         enum: ["Mujer", "Hombre"]
@@ -58,6 +74,10 @@ const trainerSchema = new Schema({
             ref: 'Test'
         }
     ]
+}, opts);
+
+trainerSchema.virtual('properties.popUpMarkup').get(function () {
+    return `<a href="/trainers/${this._id}">${this.firstName} ${this.lastName}</a>`
 });
 
 trainerSchema.post('findOneAndDelete', async (trainer) => {

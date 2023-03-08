@@ -1,9 +1,10 @@
 <%- layout('layouts/boilerplate') %> 
 <div class="row">
-   
+
     <div class="col-6 offset-3 mb-5">
         <div class="card mb-3">
-            <% if (!trainer.picture) {%>
+            
+            <% if (!trainer.picture.length) {%>
                 <div class= "col-4">
                     <img src="https://cdn-icons-png.flaticon.com/512/3586/3586930.png" class="card-img-top" alt="No picture">   
                 </div>
@@ -77,5 +78,12 @@
                 <% } %> 
             </ul>
         </div>
+        <div id='map' style='width: 625px; height: 300px;'></div>
     </div>
 </div>
+
+<script>
+    const mapToken = '<%-process.env.MAPBOX_TOKEN%>'
+    const trainer = <%-JSON.stringify(trainer)%>
+</script>
+<script src="/javascripts/mapDetailsPage.js"></script>

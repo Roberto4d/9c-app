@@ -1,5 +1,6 @@
 <%- layout('layouts/boilerplate.ejs') %> 
-<div class="row">
+<div id="map" style="width: 100%; height:400px"></div>
+<!-- <div class="row"> -->
     <h1 class="text-center">Entrenadores</h1>
     <div class="col-6 offset-3 mb-3">
         <form action="/trainers/new">    
@@ -9,7 +10,7 @@
         </form>  
         <ul class="list-group">
             <% for (let trainer of trainers  ){%>
-                <li class="list-group-item"><a href="/trainers/<%=trainer._id%>"><%=trainer.firstName%> <%=trainer.lastName%></a></li>
+                <li class="list-group-item"><a href="/trainers/<%=trainer._id%>"><%=trainer.firstName%> <%=trainer.lastName%> </a></li>
             <% } %> 
         </ul>  
     </div>
@@ -34,11 +35,16 @@
             </form>
         </div>
     </div>
-</div>
+<!-- </div> -->
 <div class="my-5">
     <span>
         <span class="text-muted">Entrenadores: <b> <%= counting %> </b> </span>
     </span>
 </div>
-    
 
+<script>
+    const mapToken = '<%-process.env.MAPBOX_TOKEN%>'
+    const trainers = {features: <%-JSON.stringify(trainers)%>}
+</script>
+    
+<script src="/javascripts/clusterMap.js"></script>

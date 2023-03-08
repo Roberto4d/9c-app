@@ -1,5 +1,8 @@
 const {genders, grades, gradesBoulder} = require("../selects");
 const Trainer = require("../models/trainer");
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+const geocoder = mbxGeocoding({accessToken: mapBoxToken})
 const {cloudinary} = require('../cloudinary')
 
 module.exports.index = async(req, res) => {
@@ -19,7 +22,12 @@ module.exports.newForm = (req,res) => {
 }
 
 module.exports.postForm = async(req,res)=>{
+    const geoData = await geocoder.forwardGeocode({
+        query: req.body.trainer.location,
+        limit: 1
+    }).send()
     const newTrainer = new Trainer(req.body.trainer);
+    newTrainer.geometry = geoData.body.features[0].geometry
     newTrainer.picture = req.files.map(f => ({ url: f.path, filename: f.filename }));
     newTrainer.author = req.user._id;
     await newTrainer.save();

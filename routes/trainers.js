@@ -16,7 +16,7 @@ router.route('/')
 router.get('/new', isLoggedIn, trainers.newForm);
 
 router.route('/:id')
-    .get(isLoggedIn, wrapAsync(trainers.details))
+    .get(wrapAsync(trainers.details))
     .put(isLoggedIn, verifyAuthor, upload.array('image'), validateTrainer,wrapAsync(trainers.putEdit))
     .delete(isLoggedIn, verifyAuthor, wrapAsync(trainers.delete));
 
