@@ -2,7 +2,7 @@
 
 <div class="row">
     <h1 class="text-center">Editar <%=trainer.firstName%> <%= trainer.lastName %></h1>
-    <div class="col-6 offset-3">
+    <div class="col-md-6 offset-md-3">
         <form action="/trainers/<%=trainer._id%>?_method=PUT"  method="POST" novalidate class="validate-form"  enctype="multipart/form-data">
             <div class="mb-2">
                 <label for="firstName" class="form-label">Nombre</label>

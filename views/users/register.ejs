@@ -1,28 +1,42 @@
 <%- layout('layouts/boilerplate') %> 
-<h1>Registrate</h1>
-<form action="/register" method="POST" novalidate class="validate-form">
-    <div class="md-2">
-        <label for="username" class="form-label">Username</label>
-        <input name="username" class="form-control" type="text"  id="username" placeholder="Adam" required>
-        <div class="valid-feedback">
-            Bien!
+
+<div class="container d-flex justify-content-center align-items-center mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+            <div class="card shadow">
+                <img src="https://images.unsplash.com/photo-1632108699611-a7df2b99a388?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+                    alt="" class="card-img-top" />
+                <div class="card-body">
+                    <h5 class="card-title">Registrar</h5>
+                    <form action="/register" method="POST" class="validate-form" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="username">Username</label>
+                            <input class="form-control" type="text" id="username" name="username" required autofocus>
+                            <div class="valid-feedback">
+                                Bien!
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="email">Email</label>
+                            <input class="form-control" type="email" id="email" name="email" required>
+                            <div class="valid-feedback">
+                                Bien!
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="password">Password</label>
+                            <input class="form-control" type="password" id="password" name="password" required>
+                            <div class="valid-feedback">
+                                Bien!
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 my-2">
+                            <button class="btn btn-dark">Registrar</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
         </div>
     </div>
-    <div class="md-2">
-        <label for="email" class="form-label">Email</label>
-        <input name="email" class="form-control" type="email"  id="email" required>
-        <div class="valid-feedback">
-            Bien!
-        </div>
-    </div>
-    <div class="md-2">
-        <label for="password" class="form-label">Contraseña</label>
-        <input name="password" class="form-control" type="password"  id="password" required>
-        <div class="valid-feedback">
-            Bien!
-        </div>
-    </div>
-    <div class="d-grid mt-4">
-        <button class="btn btn-dark">Registrar</button>
-    </div>
-</form>
+</div>
