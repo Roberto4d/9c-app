@@ -23,8 +23,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 const MongoStore = require('connect-mongo');
 
 // const helmet = require("helmet");
-// const dbUrl = process.env.DB_URL;
-const dbUrl = 'mongodb://127.0.0.1:27017/powertest'
+const dbUrl = process.env.DB_URL;
+// const dbUrl = 'mongodb://127.0.0.1:27017/powertest'
 
 main().catch(err => console.log(err));
 async function main() {
