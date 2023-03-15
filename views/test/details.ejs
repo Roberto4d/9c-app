@@ -8,9 +8,26 @@
                 <div class= "col-4">
                     <img src="https://cdn-icons-png.flaticon.com/512/3586/3586930.png" class="card-img-top" alt="No picture">   
                 </div>
-            <% } else {%>
-                <img src="<%=test.picture%>" class="card-img-top" alt="picture:<%=test.name%>">
-            <% } %>  
+            <% } %> 
+            <div id="trainerCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <% test.picture.forEach((pic, i) => { %> 
+                    <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                    <img src=" <%=pic.url %>" class="d-block w-100" alt="">
+                    </div>
+                    <% });%>  
+                </div>
+                <% if(test.picture.length > 1) {%> 
+                <button class="carousel-control-prev" type="button" data-bs-target="#trainerCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#trainerCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                <% } %> 
+            </div> 
             <div class="card-body">
                 <h6>By: <%= test.author.username %> <%= test.trainer.lastName %> </a></h6>
                 <h5 class="card-title text-center"><%=test.name%></h5>

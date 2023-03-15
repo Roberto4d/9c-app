@@ -23,7 +23,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const MongoStore = require('connect-mongo');
 
 // const helmet = require("helmet");
-const dbUrl = process.env.DB_URL;
+const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/powertest';
 // const dbUrl = 'mongodb://127.0.0.1:27017/powertest'
 
 main().catch(err => console.log(err));
@@ -43,11 +43,13 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(mongoSanitize());
 
+const secret = process.env.SECRET || 'secreto';
+
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {
-        secret: 'secreto'
+        secret
     }
 })
 
@@ -58,7 +60,7 @@ store.on("error", function(e){
 const sessionConfig = {
     store,
     name: 'session',
-    secret: 'secreto!',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -148,7 +150,6 @@ app.get('/', (req, res) => {
 
 app.use('/', userRoutes)
 app.use('/trainers', trainerRoutes)
-app.use('/test', testRoutes)
 app.use('/', testRoutes)
 app.use('/test/:id/reviews', reviewRoutes)
 
@@ -169,6 +170,7 @@ app.use((err,req,res,next) => {
     res.status(statusCode).render("errorsTemplate/error", {err})
 })
 
-app.listen(3000, () => {
+const port = process.env.PORT || 3000; 
+app.listen(port, () => {
     console.log(`Esta funcionando el Puerto 3 miguelito`);
 });

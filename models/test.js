@@ -2,14 +2,21 @@ const mongoose = require('mongoose');
 const Reviews = require('./review')
 const { Schema } = mongoose;
 
+const pictureSchema = new Schema({
+    url: String,
+    filename: String
+});
+
+pictureSchema.virtual('thumbnail').get(function () {
+    return this.url.replace('/upload', '/upload/w_200');
+});
+
 const testSchema = new Schema({
     name: {
         type: String,
         required: [true, 'Test must have a name.']
     },
-    picture: {
-        type: String
-    },
+    picture: [pictureSchema],
     description: {
         type: String
     },

@@ -74,15 +74,7 @@
                 <label for="description" class="form-label">Descripción: </label>
                 <textarea class="form-control" type="text" name="trainer[description]" id="description"><%= trainer.description %></textarea>  
             </div>  
-            <div class="mb-3">
-                <% trainer.picture.forEach((pic, i) => { %>
-                   <img src="<%= pic.thumbnail %>" alt="" class="img-thumbnail"> 
-                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%= pic.filename %>">
-                   </div>
-                    <label id="image-<%=i%>" class="form-check-label" for="flexCheckDefault">Borrar Imagen</label>
-                <% }) %> 
-            </div>
+
             <div class="mb-2">
                 <label for="image" class="form-label">Add fotos</label>
                 <input class="form-control" type="file" name="image" id="image" class="col-md-8 form-select-sm mb-3" aria-label=".form-select-lg example" multiple>

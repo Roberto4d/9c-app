@@ -2,23 +2,22 @@ const express = require("express");
 const router = express.Router({mergeParams: true});
 
 const wrapAsync = require("../utils/catchAsync");
-const {validateTest,isLoggedIn, verifyTest} = require("../middleware")
+const {validateTest,isLoggedIn, verifyTest, verifyAuthor} = require("../middleware")
 const tests = require("../controllers/test");
+const multer  = require('multer');
+const { storage } = require('../cloudinary/index')
+const upload = multer({storage});
 
-router.get('', wrapAsync(tests.index))
+router.get('/test/:id', wrapAsync(tests.details));
 
-router.get('/:id', wrapAsync(tests.details));
-
-router.get('/:id/edit', isLoggedIn,wrapAsync(tests.edit));
-
-router.put("/:id", isLoggedIn, validateTest, wrapAsync());
-
-//Agrgar un test dentro del entrenador
 router.get('/trainers/:id/test/new', isLoggedIn, wrapAsync(tests.addtestForm))
 
-router.post('/trainers/:id/test', isLoggedIn, validateTest, wrapAsync(tests.postAddTest))
+router.route('/trainers/:id/test')
+    .post( isLoggedIn, upload.array('image'), validateTest, wrapAsync(tests.postAddTest))
 
-//Eiminar un test de un entrenador
+router.get('/test/:id/edit', isLoggedIn,wrapAsync(tests.editForm));
+
+router.put("/test/:id", isLoggedIn, upload.array('image'), validateTest, wrapAsync(tests.edit));
 
 router.delete('/trainers/:id/test/:testId', isLoggedIn,verifyTest, wrapAsync(tests.deleteTest))
 

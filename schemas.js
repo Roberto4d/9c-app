@@ -41,15 +41,18 @@ module.exports.trainerSchema = Joi.object({
     }).required(),
     deleteImages: Joi.array()
 });
+
 module.exports.testSchema = Joi.object({
     test: Joi.object({
         name: Joi.string().required().escapeHTML(),
-        picture: Joi.string().required().escapeHTML(),
+        // picture: Joi.string().required().escapeHTML(),
         description: Joi.string().required().escapeHTML(),
         result: Joi.number().required(),
         categories: Joi.string().required()
-    }).required()
+    }).required(),
+    deleteImages: Joi.array()
 });
+
 module.exports.reviewSchema = Joi.object({
     review: Joi.object({
         rating: Joi.number().required().integer().min(1).max(5),

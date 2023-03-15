@@ -31,7 +31,6 @@ module.exports.postForm = async(req,res)=>{
     newTrainer.picture = req.files.map(f => ({ url: f.path, filename: f.filename }));
     newTrainer.author = req.user._id;
     await newTrainer.save();
-    console.log(newTrainer);
     req.flash('success', 'Se creo un entrenador exitosamente!');
     res.redirect(`/trainers/${newTrainer._id}`);
 }
@@ -59,8 +58,7 @@ module.exports.editForm = async(req,res) =>{
 
 module.exports.putEdit = async(req,res)=>{ 
     const {id} = req.params;
-    console.log(req.body)
-    const trainer = await Trainer.findByIdAndUpdate(id,{...req.body.trainer});
+    const trainer = await Trainer.findByIdAndUpdate(id,{...req.body.trainer}); 
     const images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     trainer.picture.push(...images);
     await trainer.save();

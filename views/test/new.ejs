@@ -4,7 +4,7 @@
     <h1 class="text-center"><%= trainer.firstName %> <%= trainer.lastName %>  </h1>
     <h2 class="text-center">Agregar Test</h2>
     <div class="col-6 offset-3">
-        <form action="/trainers/<%= trainer._id %>/test" method="POST" novalidate class="validate-form">
+        <form action="/trainers/<%= trainer._id %>/test" method="POST" novalidate class="validate-form" enctype="multipart/form-data">
             <div class="mb-2">
                 <label for="name" class="form-label">Nombre Del Test</label>
                 <input name="test[name]" class="form-control" type="text"  id="name" placeholder="Nombre" required> 
@@ -12,10 +12,14 @@
                 <div class="invalid-feedback">Please choose a username.</div> 
             </div>
             <div class="mb-2">
+                <label for="image" class="form-label">Imagenes</label>
+                <input class="form-control" type="file" name="image" id="image" class="col-md-8 form-select-sm mb-3" aria-label=".form-select-lg example" multiple>
+            </div>  
+            <!-- <div class="mb-2">
                 <label for="picture" class="form-label">Picture</label>
                 <input name="test[picture]" class="form-control" type="text"  id="picture" placeholder="URL">  
                 <div class="valid-feedback">Bien!</div>   
-            </div>
+            </div> -->
             <div class="mb-2">
                 <label for="description" class="form-label">Descripción: </label>
                 <textarea name="test[description]" class="form-control" type="text"  id="description" placeholder="Descripción"></textarea>  
