@@ -33,14 +33,16 @@
                 <p class="card-text"><%= trainer.description %></p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Genero: <a href="/trainers?gender=<%= trainer.gender %>"><%= trainer.gender %></a> <br> Edad: <%= trainer.age %> años</li>
-                <li class="list-group-item">Peso: <%= trainer.weight %> kg <br> Estatura: <%= trainer.height %> cm <br> Envergadura: <%= trainer.wingSpan %> cm </li>
+                <li class="list-group-item">Genero: <a href="/trainers?gender=<%= trainer.gender %>"><%= trainer.gender %></a> <br>
+                                            Edad: <%= trainer.age %> años</li>
+                <li class="list-group-item">Experiencia como Escalador: <%= trainer.experience %> <br> 
+                                            Experiencia como Entrenador: <%= trainer.trainingExperince %> 
                 <li class="list-group-item">Grado En Ruta: <a href="/trainers?redpointLead=<%= trainer.redpointLead %>"><%= trainer.redpointLead %></a> <br>
                                             Grado En Boulder: <a href="/trainers?redpointBoulder=<%= trainer.redpointBoulder %>"><%= trainer.redpointBoulder %></a></li>        
                 <li class="list-group-item">
                     <%  if (trainer.test.length) { %>
                     <ul> <% for(let test of trainer.test){  %> 
-                        <li> <b>Test:</b> <a href="/test/<%= test._id %>"> <%= test.name %></a> <b>Resultado:</b> <%= test.result %></li>
+                        <li> <b>Plan de Entrenamiento:</b> <a href="/test/<%= test._id %>"> <%= test.name %></a>
                         <% } %> 
                     </ul>
                     <% } else{ %>
@@ -57,7 +59,7 @@
                 <div class="list-group-item text-end">
                     <form action="/trainers/<%= trainer._id %>/test/new">
                         <div class="d-grid gap-2 mb-2">
-                            <button class="btn btn-dark">Agregar Test</button>
+                            <button class="btn btn-dark">Agregar Plan de Entrenamiento</button>
                         </div>
                     </form>
                 </div>
@@ -81,6 +83,19 @@
     </div>
     <div class="col-6">
         <div id='map'></div>
+        <div class="card mb-3 mt-3">
+            <div class="card-body mt-3">
+                <h3 class="card-title text-center">QR de <%= trainer.firstName %> <%= trainer.lastName%></h3>
+            </div>     
+            <ul class="list-group list-group-flush">
+                <div class="d-flex justify-content-center">
+                    <img class="" src="<%= qr %>">
+                </div>  
+            </ul>
+                
+        
+    </div>
+    <div>     
     </div>
 </div>
 

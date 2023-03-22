@@ -41,8 +41,8 @@ module.exports.addtestForm = async(req,res)=>{
 module.exports.postAddTest = async(req,res)=>{
     const { id } = req.params;
     const trainer = await Trainer.findById(id);
-    const { name,picture,description,result,categories } = req.body.test;  
-    const test = new Test({name,picture,description,result,categories});
+    const { name,picture,description,duration,categories } = req.body.test;  
+    const test = new Test({name,picture,description,categories, duration});
     test.picture = req.files.map(f => ({ url: f.path, filename: f.filename }));
     test.author = req.user._id;
     trainer.test.push(test);

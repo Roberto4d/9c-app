@@ -43,22 +43,19 @@ const trainerSchema = new Schema({
         enum: ["Mujer", "Hombre"]
     },
     age: {
-        type: Number,
+        type: Number
     },
-    weight: {
-        type: Number,
+    experience: {
+        type: String
     },
-    height: {
-        type: Number,
-    },
-    wingSpan:{
-        type: Number,
+    trainingExperince:{
+        type: String
     },
     redpointLead:{
         type: String,
     },
     redpointBoulder:{
-        type: String,
+        type: String
     },
     picture: [pictureSchema],
     description: {

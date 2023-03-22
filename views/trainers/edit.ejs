@@ -31,30 +31,27 @@
                 </select>
             </div>
             <div class="mb-2">
-                <label for="weight" class="form-label">Peso</label>
-                <select name="trainer[weight]" id="weight" value="<%= trainer.weight %> " class="col-md-1 form-select-sm mb-3" aria-label=".form-select-lg example">
-                    <% for(let i = 40; i <= 100; i++ ){%>
-                        <option value="<%=i%>" <%= trainer.weight === i ? 'selected' : '' %> > <%=i%> kg</option>  
+                <label for="experience" class="form-label">Experiencia como Escalador</label>
+                <select name="trainer[experience]" id="experience" value="<%= trainer.experience %>" class="form-select-sm col-md-2 mb-3" aria-label=".form-select-lg example" required>
+                    <% for(let e of experience){%>
+                        <option value="<%=e%>" <%= trainer.experience === e ? 'selected' : '' %> > <%=e%> </option>  
                     <% } %>  
                 </select>
+                <div class="invalid-feedback">
+                    Please choose a username.
+                </div>
             </div> 
             <div class="mb-2">
-                <label for="height" class="form-label">Estatura</label>
-                <select name="trainer[height]" id="height" value="<%= trainer.height %> " class="col-md-1 form-select-sm mb-3" aria-label=".form-select-lg example">
-                    <% for(let j = 140; j <= 210; j++ ){%>
-                        <option value="<%=j%>" <%= trainer.height === j ? 'selected' : '' %> > <%=j%> cm</option>  
+                <label for="trainingExperince" class="form-label">Experiencia como Entrenador</label>
+                <select name="trainer[trainingExperince]" id="trainingExperince" value="<%= trainer.trainingExperince %>" class="form-select-sm col-md-2 mb-3" aria-label=".form-select-lg example" required>
+                    <% for(let te of experience){%>
+                        <option value="<%=te%>" <%= trainer.trainingExperince === te ? 'selected' : '' %> > <%=te%> </option>  
                     <% } %>  
                 </select>
-            </div>
+                <div class="invalid-feedback">
+                    Please choose a username.
+                </div>           
             <div class="mb-2">
-                <label for="wingSpan" class="form-label">Envergadura</label>
-                <select name="trainer[wingSpan]" id="wingSpan" value="<%= trainer.wingSpan %> " class="col-md-1 form-select-sm mb-3" aria-label=".form-select-lg example">
-                    <% for(let l = 140; l <= 210; l++ ){%>
-                        <option value="<%=l%>" <%= trainer.wingSpan === l ? 'selected' : '' %> ><%=l%> cm</option>  
-                    <% } %>  
-                </select>
-           </div>
-           <div class="mb-2">
                 <label for="lead" class="form-label">Maximo Grado en Ruta</label>
                 <select name="trainer[redpointLead]" id="lead" value="<%= trainer.redpointLead %>" class="col-md-1 form-select-sm mb-3" aria-label=".form-select-lg example">
                     <% for(let grade of grades){%>
@@ -74,7 +71,15 @@
                 <label for="description" class="form-label">Descripción: </label>
                 <textarea class="form-control" type="text" name="trainer[description]" id="description"><%= trainer.description %></textarea>  
             </div>  
-
+            <div class="mb-3">
+                <% trainer.picture.forEach((pic, i) => { %>
+                   <img src="<%= pic.thumbnail %>" alt="" class="img-thumbnail"> 
+                   <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%= pic.filename %>">
+                   </div>
+                    <label id="image-<%=i%>" class="form-check-label" for="flexCheckDefault">Borrar Imagen</label>
+                <% }) %>  
+            </div>
             <div class="mb-2">
                 <label for="image" class="form-label">Add fotos</label>
                 <input class="form-control" type="file" name="image" id="image" class="col-md-8 form-select-sm mb-3" aria-label=".form-select-lg example" multiple>

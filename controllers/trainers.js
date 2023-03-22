@@ -1,24 +1,25 @@
-const {genders, grades, gradesBoulder} = require("../selects");
+const {genders, grades, gradesBoulder, experience} = require("../selects");
 const Trainer = require("../models/trainer");
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapBoxToken = process.env.MAPBOX_TOKEN;
-const geocoder = mbxGeocoding({accessToken: mapBoxToken})
-const {cloudinary} = require('../cloudinary')
+const geocoder = mbxGeocoding({accessToken: mapBoxToken});
+const {cloudinary} = require('../cloudinary');
+const qrCode = require('qrcode');
 
 module.exports.index = async(req, res) => {
     const { gender } = req.query;
     const counting = await Trainer.find({}).count();
    if (gender){
         const trainers = await Trainer.find({gender: `${gender}`}); 
-        res.render("trainers/trainers",{trainers, genders, grades, counting, gradesBoulder });
+        res.render("trainers/trainers",{trainers, genders, grades, counting, gradesBoulder, experience });
     } else{
         const trainers = await Trainer.find({}); 
-        res.render("trainers/trainers",{counting, trainers, genders, grades, gradesBoulder});
+        res.render("trainers/trainers",{counting, trainers, genders, grades, gradesBoulder, experience});
     }   
 }
 
 module.exports.newForm = (req,res) => {
-    res.render("trainers/new", {genders,grades,gradesBoulder});   
+    res.render("trainers/new", {genders,grades,gradesBoulder, experience});   
 }
 
 module.exports.postForm = async(req,res)=>{
@@ -39,21 +40,24 @@ module.exports.details = async(req,res) => {
     const { id } = req.params;
     const counting = await Trainer.find({}).count();
     const trainer = await Trainer.findById(id).populate("test").populate("author");
+    const url = `ninectraing.onrender.com/trainers/${id}`
+    const qr = await qrCode.toDataURL(url)
     if(!trainer){
         req.flash('error', 'No se encontro entrenador :(');
         return res.redirect('/trainers')
     }
-    res.render("trainers/details", {trainer,counting});
+    res.render("trainers/details", {trainer,counting,qr});
 }
 
 module.exports.editForm = async(req,res) =>{
     const {id} = req.params;
     const trainer = await Trainer.findById(id);
+    console.log(trainer)
     if(!trainer){
         req.flash('error', 'No se encontro al entrenador');
         return res.redirect(`/trainers`)  
     }
-    res.render("trainers/edit", {trainer, genders, grades, gradesBoulder});    
+    res.render("trainers/edit", {trainer, genders, grades, gradesBoulder, experience});    
 }
 
 module.exports.putEdit = async(req,res)=>{ 

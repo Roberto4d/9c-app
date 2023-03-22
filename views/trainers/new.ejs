@@ -41,15 +41,11 @@
                 </select>
             </div>
             <div class="mb-2">
-                <label for="image" class="form-label">Imagenes</label>
-                <input class="form-control" type="file" name="image" id="image" class="col-md-8 form-select-sm mb-3" aria-label=".form-select-lg example" multiple>
-            </div>  
-            <div class="mb-2">
-                <label for="weight" class="form-label">Peso</label>
-                <select name="trainer[weight]" id="weight" class="form-select-sm col-md-2 mb-3" aria-label=".form-select-lg example" required>
+                <label for="experience" class="form-label">Experiencia como Escalador</label>
+                <select name="trainer[experience]" id="experience" class="form-select-sm col-md-2 mb-3" aria-label=".form-select-lg example" required>
                     <option selected disabled value="">-</option>
-                    <% for(let i = 40; i <= 100; i++ ){%>
-                        <option value="<%=i%>"> <%=i%></option>  
+                    <% for(let e of experience){%>
+                        <option value="<%=e%>"> <%=e%></option>  
                     <% } %>  
                 </select>
                 <div class="invalid-feedback">
@@ -57,23 +53,17 @@
                 </div>
             </div> 
             <div class="mb-2">
-                <label for="height" class="form-label">Estatura</label>
-                <select name="trainer[height]" id="height" class="col-md-2 form-select-sm mb-3" aria-label=".form-select-lg example" required>
+                <label for="trainingExperince" class="form-label">Experiencia como Entrenador</label>
+                <select name="trainer[trainingExperince]" id="trainingExperince" class="form-select-sm col-md-2 mb-3" aria-label=".form-select-lg example" required>
                     <option selected disabled value="">-</option>
-                    <% for(let j = 140; j <= 210; j++ ){%>
-                        <option value="<%=j%>"> <%=j%></option>  
+                    <% for(let ee of experience){%>
+                        <option vaue="<%=ee%>"> <%=ee%></option>  
                     <% } %>  
-                </select> 
-            </div>
-            <div class="mb-2">
-                <label for="wingSpan" class="form-label">Envergadura</label>
-                <select name="trainer[wingSpan]" id="wingSpan" class="col-md-2 form-select-sm mb-3" aria-label=".form-select-lg example" required>
-                    <option selected disabled value="">-</option>
-                    <% for(let l = 140; l <= 210; l++ ){%>
-                        <option value="<%=l%>"><%=l%></option>  
-                    <% } %>  
-                </select> 
-            </div>
+                </select>
+                <div class="invalid-feedback">
+                    Please choose a username.
+                </div>
+            </div> 
            <div class="mb-2">
                 <label for="lead" class="form-label">Maximo Grado en Ruta</label>
                 <select name="trainer[redpointLead]" id="lead" class="col-md-2 form-select-sm mb-3" aria-label=".form-select-lg example" required>
@@ -92,6 +82,10 @@
                 <% } %>   
             </select>
            </div>
+           <div class="mb-2">
+                <label for="image" class="form-label">Imagenes</label>
+                <input class="form-control" type="file" name="image" id="image" class="col-md-8 form-select-sm mb-3" aria-label=".form-select-lg example" multiple>
+            </div>  
             <div class="mb-2">
                 <label for="description" class="form-label">Descripción: </label>
                 <textarea name="trainer[description]" class="form-control" type="text"  id="description" placeholder="Descripción"></textarea>  

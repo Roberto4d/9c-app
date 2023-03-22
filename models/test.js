@@ -20,9 +20,9 @@ const testSchema = new Schema({
     description: {
         type: String
     },
-    result: {
-        type: Number,
-        required: [true, 'Result required.']
+    duration: {
+        type: String,
+        required: [true, 'duration required.']
     },
     categories: {
         type: String,

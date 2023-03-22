@@ -32,9 +32,8 @@ module.exports.trainerSchema = Joi.object({
         age: Joi.number().min(0).required(),
         gender: Joi.string(),
         // picture: Joi.string(),
-        weight: Joi.number(),
-        height: Joi.number(),
-        wingSpan: Joi.number(),
+        experience: Joi.string(),
+        trainingExperince: Joi.string(),
         redpointLead: Joi.string(),
         redpointBoulder: Joi.string(),
         description: Joi.string().escapeHTML()
@@ -47,7 +46,7 @@ module.exports.testSchema = Joi.object({
         name: Joi.string().required().escapeHTML(),
         // picture: Joi.string().required().escapeHTML(),
         description: Joi.string().required().escapeHTML(),
-        result: Joi.number().required(),
+        duration: Joi.string().required(),
         categories: Joi.string().required()
     }).required(),
     deleteImages: Joi.array()

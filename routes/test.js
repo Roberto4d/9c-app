@@ -2,13 +2,15 @@ const express = require("express");
 const router = express.Router({mergeParams: true});
 
 const wrapAsync = require("../utils/catchAsync");
-const {validateTest,isLoggedIn, verifyTest, verifyAuthor} = require("../middleware")
 const tests = require("../controllers/test");
 const multer  = require('multer');
 const { storage } = require('../cloudinary/index')
 const upload = multer({storage});
 
-router.get('/test/:id', wrapAsync(tests.details));
+const {validateTest,isLoggedIn, verifyTest, verifyAuthor} = require("../middleware")
+
+
+router.get('/test/:id',isLoggedIn, wrapAsync(tests.details));
 
 router.get('/trainers/:id/test/new', isLoggedIn, wrapAsync(tests.addtestForm))
 

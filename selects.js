@@ -10,9 +10,12 @@ const gradesBoulder = [ "v0", "v1", "v2", "v3", "v4", "v5",
                         "v11", "v12", "v13", "v14", "v15",
                         "v16", "v17"]
 
+const experience = ["Menos De 1 Año", "De 1 a 3 Años", "De 4 a 10 años", "Mas de 10 años" ];
+
 const categories = ["Finger Strength", "Upper Body", "Flexibility", "Core"]
 
 exports.genders = genders
 exports.grades = grades
 exports.gradesBoulder = gradesBoulder
 exports.categories = categories
+exports.experience = experience
